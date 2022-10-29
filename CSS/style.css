@@ -1,5 +1,29 @@
 *{
     margin: 0;
     padding: 0;
-};
+}
 
+/* Significant portions of the page */
+body{
+    background-color: rgb(102, 102, 102);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+header{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Game */
+
+
+/* Reusable classes */
+.hide {
+    display: none;
+}

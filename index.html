@@ -5,23 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bomb Squad</title>
-    <link rel="stylesheet" href="CSS/style.css">
     <script defer src="JS/script.js"></script>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <header>
     <div id="title">
         <h1>Welcome to Bomb Squad!</h1>
+        <div id="instructions">
+            <h3>In Bomb Squad, the objective is to clear the field of all bombs by flagging all tiles with bombs in them! <br>
+                Left click to clear tiles and right click to flag tiles. <br>
+                As you clear tiles you will uncover warnings, the warnings tell you how many bombs are adjacent to the warning tile.
+            </h3>
+        </div>
     </div>
 </header>
 <body>
-    <div id="instructions">
-        <h3>In Bomb Squad, the objective is to clear the field of all bombs by flagging all tiles with bombs in them! <br></br>
-            Left click to clear tiles and right click to flag tiles. <br></br>
-            As you clear tiles you will uncover warnings, the warnings tell you how many bombs are adjacent to the warning tile.
-        </h3>
-    </div>
-    <div id="gameBoard">
-        
+    <div id="gameContainer">
+        <div id="gameOver">
+            <h4 id="lose" class="hide">You lose!</h4>
+            <h4 id="win" class="hide">You win!</h4>
+        </div>
+        <div id="gameBoard">
+            
+        </div>
     </div>
 </body>
 </html>
