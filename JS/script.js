@@ -23,34 +23,45 @@ restartBtn.addEventListener(`click`, ()=>{
 });
 
 // The game itself
-// const gameParams = {
-//     rows: 8,
-//     columns:8,
-//     bombs: 10,
-//     bombImg: `💥`,
-//     lose: false,
-//     warnings: {1: `blue`, 2: `yellow`, 3: `red`, 4: `orange`, 5: `green`, 6: `purple`, 7: `aqua`, 8: `chartreuse`}
-// };
 
+// The board is a grid with an x and y axis so I made a function that uses foor loops to push an empty tile object into an empty row array into an empty board array that houses all the tiles and rows
 const makeBoard = (size, bombs)=>{
     const board = [];
-    
+    let bombTiles = 0
+
     for (let x = 0; x < size; x++){
         const row = [];
         for (let y = 0; y < size; y++){
             const tile = {
-                xAxis,
-                yAxis,
-            };
-            row.push(tile);
-        };
-        board.push(row);
+                x,
+                y,
+            }; // I need to randomly place bombs into tiles so long as there are still bombs needing to be placed
+            do {
+                let randomNum = Math.random()*1
+                // Still need a way to check if all bombs are placed
+                    // if (){
+                        if(randomNum>0.5){
+                            tile.x = `!Boom!`
+                            bombTiles++
+                            console.log(randomNum)
+                            console.log(bombTiles)
+                        }else{
+                            tile.y = `!Boom!`
+                            bombTiles++
+                            console.log(randomNum)
+                            console.log(bombTiles)
+                        };
+                    // };
+            } while (bombs >= bombTiles);
+        row.push(tile);
     };
+    board.push(row);
+};
     return board
 };
 
 const game = {
     start: ()=>{
-        makeBoard()
+        console.log(makeBoard(2,1))
     }
 };
