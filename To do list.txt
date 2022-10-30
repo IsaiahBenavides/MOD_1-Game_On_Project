@@ -1,0 +1,4 @@
+Display game board
+flagging
+auto clear
+bomb counter
