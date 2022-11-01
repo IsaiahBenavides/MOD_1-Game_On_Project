@@ -26,6 +26,9 @@ const moleHoles = document.querySelectorAll(`.moleHole`)
         hole7, hole8, hole9
     ];
 
+// Variables
+let lastPopUp = null;
+let lastMole = null;
 
 // Game
 
@@ -44,11 +47,20 @@ const game = {
 
     // Problem: I need to have a way to select a random mole hole. 
     // Solution: By using math random and multiplying it by the length of the moleHill array and tieing the output to a variable I can have a random mole hole selected every time the function is ran.
+    // Problem 2: How to stop recursion?
     randomMoleHole: (moleHill)=>{
         const popUpChance = Math.floor(Math.random()*moleHill.length);
         const popUpMole = moleHill[popUpChance];
-        console.log(popUpMole)
+        // Solution 2: By making a variable for the last popUpChance to be stored in I can check to see if it repeats, and if it does I run the randomeMoleHole function again until it doesn't. This should help prevent recursion.
+        if (popUpChance === lastPopUp){
+            console.log(`Repeat, try again`);
+            game.randomMoleHole(moleHill);
+        };
+        lastPopUp = popUpChance;
+        console.log(popUpMole);
+        return popUpChance
     },
+    
 
     // Problem: I have to figure out how to get the moles and bunnies to pop up with their respective images.
     moleRandomizer: ()=>{
@@ -64,14 +76,18 @@ const game = {
     },
 
     start: ()=>{
-        timeKeeper()
-        scoreTracker()
-        moleRandomizer()
+        timeKeeper();
+        scoreTracker();
+        moleRandomizer();
     },
 };
 
-
-game.randomMoleHole(moleHill)
+game.randomMoleHole(moleHill);
+game.randomMoleHole(moleHill);
+game.randomMoleHole(moleHill);
+game.randomMoleHole(moleHill);
+game.randomMoleHole(moleHill);
+game.randomMoleHole(moleHill);
 
 
 // Buttons
@@ -82,7 +98,7 @@ startButton.addEventListener(`click`, ()=>{
     restartButton.classList.add(`button-87`);
     restartButton.classList.remove(`hide`);
 
-    game.start()
+    game.start();
 });
 
 restartButton.addEventListener(`click`, ()=>{
