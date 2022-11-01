@@ -41,8 +41,9 @@ body{
     text-align: center;
 }
 
-#score{
-    text-align: end;
+#hud{
+    display: flex;
+    justify-content: space-between;
 }
 
 #moleHill{
