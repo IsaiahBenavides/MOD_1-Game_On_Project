@@ -40,7 +40,7 @@ const makeBoard = (size, bombs)=>{
                 let randomNum = Math.random()*1
                 // Still need a way to check if all bombs are placed
                     // if (){
-                        if(randomNum>0.5){
+                        if(randomNum>0.51){
                             tile.x = `!Boom!`
                             bombTiles++
                             console.log(randomNum)
