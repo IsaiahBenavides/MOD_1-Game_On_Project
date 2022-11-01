@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+cursor{
+    src: url(../Images/hammer-cursor.png);
+}
+
 body{
     width: 100vw;
     height: 100vh;
@@ -13,9 +17,9 @@ body{
 }
 
 #intro{
-    margin-top: 4%;
     margin-left: 8%;
     margin-right: 8%;
+    margin-top: 4%;
     padding: 15px;
     border: 3px solid black;
     background-color: burlywood;
@@ -26,8 +30,8 @@ body{
 }
 
 #gameContainer{
-    margin: 15%;
-    padding: 15px;
+    margin: 10%;
+    padding: 80px;
     border: 3px solid black;
     background-color: burlywood;
     display: flex;
@@ -42,20 +46,26 @@ body{
 }
 
 #moleHill{
-    max-height: 50vh;
     max-width: 80vw;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-around;
+    max-height: 50vh;
+    border: 3px solid black;
+    background-color: rgb(90,174,107);
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    grid-template-rows: 33.3% 33.3% 33.3%;
+    justify-content: center;
+    align-items: center;
 }
 
 #moleHill>.moleHole{
-
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .moleHole>img{
-    max-width: 15%;
-    max-height: 15%;
+    max-width: 130px;
 }
 
 #gameButtons{
