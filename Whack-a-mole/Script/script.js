@@ -8,7 +8,6 @@ const onePoint = document.querySelectorAll(`.onePoint`);
 const fivePoint = document.querySelectorAll(`.fivePoint`);
 const minusOnePoint = document.querySelectorAll(`.minusOnePoint`);
 const minusThreePoint = document.querySelectorAll(`.minusThreePoint`);
-const moleHoles = document.querySelectorAll(`.moleHole`)
 
     //Mole Holes
     const hole1 = document.querySelector(`#holeOne`);
@@ -37,7 +36,18 @@ const game = {
 
     //Problem: How do I keep track of the time elapsed during the game? How do I force the game to stop as soon as the timer reaches zero?
     timeKeeper: ()=>{
-
+        let countDown = 60;
+        function tick(){
+            countDown--;
+            timer.textContent = countDown
+            if(countDown>0){
+                setTimeout(tick, 1000)
+            }else{
+                timer.textContent = `00`
+                gameOver = true
+            }
+        };
+        tick()
     },
 
     // Problem: I need a way to track all of the different point values of the moles and bunnies hit
@@ -64,30 +74,48 @@ const game = {
 
     // Problem: I have to figure out how to get the moles and bunnies to pop up with their respective images.
     moleRandomizer: ()=>{
-        let moleChance = Math.ceil(Math.random()*4).toFixed(0);
+        let moleChance = Math.ceil(Math.random()*10).toFixed(0);
 
         const popUpTime =(maxTime, minTime)=>{
             Math.round(Math.random()*(maxTime - minTime)+minTime);
         };
+        
+        // The lower the value the worse the pop up, 1-2 = minusThree, 3-8 = minusOne, 9-18 = onePoint, 19-20 = fivePoint
+        if (moleChance >= 3 && moleChance <= 6){
+            const popUp = game.randomMoleHole(moleHill)
+            // if(moleHill.hasChildNodes(popUp) === true){
+                // console.log(popUp.childNodes)
+                console.log(`check`)
+            // }
+            console.log(`3-6`)
+        }else if(moleChance >= 7 && moleChance <= 18){
+            let popUp = game.randomMoleHole(moleHill)
+            console.log(`7-18`)
+        }else if (moleChance >= 19){
+            let popUp = game.randomMoleHole(moleHill)
+            console.log(`19+`)
+        }else{
+            let popUp = game.randomMoleHole(moleHill)
+            console.log(`2-`)
+        };
 
-        do {
+        // do {
             
-        } while (game.gameOver = false);
+        // } while (game.gameOver = false);
     },
 
     start: ()=>{
-        timeKeeper();
-        scoreTracker();
-        moleRandomizer();
+        game.timeKeeper();
+        game.scoreTracker();
+        game.moleRandomizer();
     },
 };
 
-game.randomMoleHole(moleHill);
-game.randomMoleHole(moleHill);
-game.randomMoleHole(moleHill);
-game.randomMoleHole(moleHill);
-game.randomMoleHole(moleHill);
-game.randomMoleHole(moleHill);
+
+// game.moleRandomizer()
+// game.moleRandomizer()
+// game.moleRandomizer()
+// game.moleRandomizer()
 
 
 // Buttons
