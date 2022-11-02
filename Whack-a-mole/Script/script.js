@@ -8,15 +8,15 @@ const timer = document.querySelector(`#time`);
 
 //Mole Holes
     const moleHill = document.querySelector(`#moleHill`);
-    const hole1 = document.querySelector(`#holeOne`);
-    const hole2 = document.querySelector(`#holeTwo`);
-    const hole3 = document.querySelector(`#holeThree`);
-    const hole4 = document.querySelector(`#holeFour`);
-    const hole5 = document.querySelector(`#holeFive`);
-    const hole6 = document.querySelector(`#holeSix`);
-    const hole7 = document.querySelector(`#holeSeven`);
-    const hole8 = document.querySelector(`#holeEight`);
-    const hole9 = document.querySelector(`#holeNine`);
+    const hole1 = document.querySelector(`#h1Hole`);
+    const hole2 = document.querySelector(`#h2Hole`);
+    const hole3 = document.querySelector(`#h3Hole`);
+    const hole4 = document.querySelector(`#h4Hole`);
+    const hole5 = document.querySelector(`#h5Hole`);
+    const hole6 = document.querySelector(`#h6Hole`);
+    const hole7 = document.querySelector(`#h7Hole`);
+    const hole8 = document.querySelector(`#h8Hole`);
+    const hole9 = document.querySelector(`#h9Hole`);
     const moleHillArr = [
         hole1, hole2, hole3, 
         hole4, hole5, hole6, 
@@ -72,27 +72,32 @@ const game = {
 
     // Problem: I have to figure out how to get the moles and bunnies to pop up with their respective images.
     moleRandomizer: ()=>{
-        let moleChance = Math.ceil(Math.random()*10).toFixed(0);
-        
-        const popUpTime =(maxTime, minTime)=>{
-            Math.round(Math.random()*(maxTime - minTime)+minTime);
+        let moleChance = Math.ceil(Math.random()*20).toFixed(0);
+
+        let popUp = game.randomMoleHole(moleHillArr)
+
+        const popUpTime =(minTime, maxTime)=>{
+            return Math.round(Math.random()*(maxTime - minTime)+minTime);
         };
+
+        const randTime = popUpTime(300, 1000)
+
         // The lower the value the worse the pop up, 1-2 = minusThree, 3-8 = minusOne, 9-18 = onePoint, 19-20 = fivePoint
         if (moleChance >= 3 && moleChance <= 6){
-            let popUp = game.randomMoleHole(moleHillArr)
-            console.log(popUp)
-
+            
             moleHillArr.forEach(hole => {
                 if(hole.id === popUp.id){
-                    hole.classList.toggle(`hide`)
-                    hole.innerHTML = `<img src="Images/bunny1Point.png"></img>`
-                    // setTimeout(()=>{
-                    //     hole.innerHTML()
-                    // })
+                    const swapOut = ()=>{
+                        setTimeout(()=>{
+                            hole.src = `Images/moleHole.png`
+                        }, randTime)
+                    }
+                    console.log(hole.src)
+                    hole.src = `Images/bunny1Point.png`
+                    swapOut()
                 }
             });
-
-            console.log(`3-6`)
+            console.log(`3-6,`, moleChance)
         }
 
 
