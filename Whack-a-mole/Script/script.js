@@ -68,54 +68,118 @@ const game = {
         // console.log(popUpMole);
         return popUpChance, popUpMole
     },
-    
+
+    randomPopUpTime: ()=>{
+    const popUpTime =(minTime, maxTime)=>{
+        return Math.round(Math.random()*(maxTime - minTime)+minTime);
+    };
+    const randTime = popUpTime(1000, 3000)
+    return randTime
+    },
+
+    popUpRandomizer: ()=>{
+        let popUp = game.randomMoleHole(moleHillArr)
+        
+        return popUp.id
+    },
+
+    swapOut: ()=>{
+        let currentHole;
+        moleHillArr.forEach(hole =>{
+            if(hole.id === game.popUpRandomizer()){
+                currentHole = hole
+                setTimeout(()=>{
+                    currentHole.src = `Images/moleHole.png`
+                }, 
+                game.randomPopUpTime());
+                return currentHole
+            };
+        });
+        console.log(currentHole.id)
+    },
 
     // Problem: I have to figure out how to get the moles and bunnies to pop up with their respective images.
     moleRandomizer: ()=>{
         let moleChance = Math.ceil(Math.random()*20).toFixed(0);
 
-        let popUp = game.randomMoleHole(moleHillArr)
-
-        const popUpTime =(minTime, maxTime)=>{
-            return Math.round(Math.random()*(maxTime - minTime)+minTime);
-        };
-
-        const randTime = popUpTime(300, 1000)
-
-        // The lower the value the worse the pop up, 1-2 = minusThree, 3-8 = minusOne, 9-18 = onePoint, 19-20 = fivePoint
-        if (moleChance >= 3 && moleChance <= 6){
-            
-            moleHillArr.forEach(hole => {
-                if(hole.id === popUp.id){
-                    const swapOut = ()=>{
-                        setTimeout(()=>{
-                            hole.src = `Images/moleHole.png`
-                        }, randTime)
-                    }
-                    console.log(hole.src)
-                    hole.src = `Images/bunny1Point.png`
-                    swapOut()
-                }
-            });
-            console.log(`3-6,`, moleChance)
-        }
-
-
-        // }else if(moleChance >= 7 && moleChance <= 18){
-        //     let popUp = game.randomMoleHole(moleHillArr)
-        //     console.log(`7-18`)
-        // }else if (moleChance >= 19){
-        //     let popUp = game.randomMoleHole(moleHillArr)
-        //     console.log(`19+`)
-        // }else{
-        //     let popUp = game.randomMoleHole(moleHillArr)
-        //     console.log(`2-`)
+        // const popUpTime =(minTime, maxTime)=>{
+        //     return Math.round(Math.random()*(maxTime - minTime)+minTime);
         // };
 
-        // do {
-            
-        // } while (game.gameOver = false);
+        // const randTime = popUpTime(1000, 3000)
+        
+        // let popUp = game.randomMoleHole(moleHillArr)
+
+        // The lower the value the worse the pop up, 1-2 = minusThree, 3-8 = minusOne, 9-18 = onePoint, 19-20 = fivePoint
+        // perhaps try setting the swapOut image to a variable and then using another function for randomizing which hole the image pops up at?
+
+            if (moleChance >= 3 && moleChance <= 6){
+                // let popUp = game.randomMoleHole(moleHillArr)
+                // moleHillArr.forEach(hole => {
+                    // if(hole.id === game.popUpRandomizer().id){
+
+                        // const swapOut = ()=>{
+                        //     setTimeout(()=>{
+                        //         hole.src = `Images/moleHole.png`
+                        //     }, randTime);
+                        // }
+
+                        console.log(game.swapOut().currentHole);
+                        hole.src = `Images/bunny1Point.png`
+                        game.swapOut();
+                    // };
+                // });
+                console.log(`3-6,`, moleChance);
+            };
+            // }else if(moleChance >= 7 && moleChance <= 18){
+            //     // let popUp = game.randomMoleHole(moleHillArr)
+            //     moleHillArr.forEach(hole => {
+            //         if(hole.id === popUp.id){
+            //             const swapOut = ()=>{
+            //                 setTimeout(()=>{
+            //                     hole.src = `Images/moleHole.png`
+            //                 }, randTime);
+            //             }
+            //             console.log(hole.src);
+            //             hole.src = `Images/mole1Point.png`
+            //             swapOut()
+            //         };
+            //     });
+            //     console.log(`7-18`)
+            // }else if (moleChance >= 19){
+            //     // let popUp = game.randomMoleHole(moleHillArr)
+            //     moleHillArr.forEach(hole => {
+            //         if(hole.id === popUp.id){
+            //             const swapOut = ()=>{
+            //                 setTimeout(()=>{
+            //                     hole.src = `Images/moleHole.png`
+            //                 }, randTime);
+            //             }
+            //             console.log(hole.src);
+            //             hole.src = `Images/mole5Point.png`
+            //             swapOut()
+            //         };
+            //     });
+            //     console.log(`19+`)
+            // }else{
+            //     // let popUp = game.randomMoleHole(moleHillArr)
+            //     moleHillArr.forEach(hole => {
+            //         if(hole.id === popUp.id){
+            //             const swapOut = ()=>{
+            //                 setTimeout(()=>{
+            //                     hole.src = `Images/moleHole.png`
+            //                 }, randTime);
+            //             }
+            //             console.log(hole.src);
+            //             hole.src = `Images/bunny3Point.png`
+            //             swapOut()
+            //         };
+            //     });
+            //     console.log(`2-`)
+            // };
+        // } while (game.gameOver === false);
     },
+
 
     start: ()=>{
         game.timeKeeper();
@@ -125,11 +189,21 @@ const game = {
 };
 
 
-game.moleRandomizer()
-game.moleRandomizer()
-game.moleRandomizer()
-game.moleRandomizer()
+// game.swapOut()
 
+
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
 
 // Buttons
 startButton.addEventListener(`click`, ()=>{
