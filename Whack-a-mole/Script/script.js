@@ -4,12 +4,10 @@ const restartButton = document.querySelector(`#restartButton`);
 const gameContainer = document.querySelector(`#gameContainer`);
 const score = document.querySelector(`#score`);
 const timer = document.querySelector(`#time`);
-const onePoint = document.querySelectorAll(`.onePoint`);
-const fivePoint = document.querySelectorAll(`.fivePoint`);
-const minusOnePoint = document.querySelectorAll(`.minusOnePoint`);
-const minusThreePoint = document.querySelectorAll(`.minusThreePoint`);
 
-    //Mole Holes
+
+//Mole Holes
+    const moleHill = document.querySelector(`#moleHill`);
     const hole1 = document.querySelector(`#holeOne`);
     const hole2 = document.querySelector(`#holeTwo`);
     const hole3 = document.querySelector(`#holeThree`);
@@ -19,7 +17,7 @@ const minusThreePoint = document.querySelectorAll(`.minusThreePoint`);
     const hole7 = document.querySelector(`#holeSeven`);
     const hole8 = document.querySelector(`#holeEight`);
     const hole9 = document.querySelector(`#holeNine`);
-    const moleHill = [
+    const moleHillArr = [
         hole1, hole2, hole3, 
         hole4, hole5, hole6, 
         hole7, hole8, hole9
@@ -58,46 +56,56 @@ const game = {
     // Problem: I need to have a way to select a random mole hole. 
     // Solution: By using math random and multiplying it by the length of the moleHill array and tieing the output to a variable I can have a random mole hole selected every time the function is ran.
     // Problem 2: How to stop recursion?
-    randomMoleHole: (moleHill)=>{
-        const popUpChance = Math.floor(Math.random()*moleHill.length);
-        const popUpMole = moleHill[popUpChance];
+    randomMoleHole: (moleHillArr)=>{
+        const popUpChance = Math.floor(Math.random()*moleHillArr.length);
+        const popUpMole = moleHillArr[popUpChance];
         // Solution 2: By making a variable for the last popUpChance to be stored in I can check to see if it repeats, and if it does I run the randomeMoleHole function again until it doesn't. This should help prevent recursion.
         if (popUpChance === lastPopUp){
             console.log(`Repeat, try again`);
-            game.randomMoleHole(moleHill);
+            game.randomMoleHole(moleHillArr);
         };
         lastPopUp = popUpChance;
-        console.log(popUpMole);
-        return popUpChance
+        // console.log(popUpMole);
+        return popUpChance, popUpMole
     },
     
 
     // Problem: I have to figure out how to get the moles and bunnies to pop up with their respective images.
     moleRandomizer: ()=>{
         let moleChance = Math.ceil(Math.random()*10).toFixed(0);
-
+        
         const popUpTime =(maxTime, minTime)=>{
             Math.round(Math.random()*(maxTime - minTime)+minTime);
         };
-        
         // The lower the value the worse the pop up, 1-2 = minusThree, 3-8 = minusOne, 9-18 = onePoint, 19-20 = fivePoint
         if (moleChance >= 3 && moleChance <= 6){
-            const popUp = game.randomMoleHole(moleHill)
-            // if(moleHill.hasChildNodes(popUp) === true){
-                // console.log(popUp.childNodes)
-                console.log(`check`)
-            // }
+            let popUp = game.randomMoleHole(moleHillArr)
+            console.log(popUp)
+
+            moleHillArr.forEach(hole => {
+                if(hole.id === popUp.id){
+                    hole.classList.toggle(`hide`)
+                    hole.innerHTML = `<img src="Images/bunny1Point.png"></img>`
+                    // setTimeout(()=>{
+                    //     hole.innerHTML()
+                    // })
+                }
+            });
+
             console.log(`3-6`)
-        }else if(moleChance >= 7 && moleChance <= 18){
-            let popUp = game.randomMoleHole(moleHill)
-            console.log(`7-18`)
-        }else if (moleChance >= 19){
-            let popUp = game.randomMoleHole(moleHill)
-            console.log(`19+`)
-        }else{
-            let popUp = game.randomMoleHole(moleHill)
-            console.log(`2-`)
-        };
+        }
+
+
+        // }else if(moleChance >= 7 && moleChance <= 18){
+        //     let popUp = game.randomMoleHole(moleHillArr)
+        //     console.log(`7-18`)
+        // }else if (moleChance >= 19){
+        //     let popUp = game.randomMoleHole(moleHillArr)
+        //     console.log(`19+`)
+        // }else{
+        //     let popUp = game.randomMoleHole(moleHillArr)
+        //     console.log(`2-`)
+        // };
 
         // do {
             
@@ -112,10 +120,10 @@ const game = {
 };
 
 
-// game.moleRandomizer()
-// game.moleRandomizer()
-// game.moleRandomizer()
-// game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
+game.moleRandomizer()
 
 
 // Buttons

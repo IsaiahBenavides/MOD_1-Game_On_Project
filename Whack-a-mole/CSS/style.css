@@ -1,11 +1,10 @@
 *{
     margin: 0;
     padding: 0;
+    cursor: url(../Images/hammer-cursor.png), auto;
 }
 
-cursor{
-    src: url(../Images/hammer-cursor.png);
-}
+
 
 body{
     width: 100vw;
