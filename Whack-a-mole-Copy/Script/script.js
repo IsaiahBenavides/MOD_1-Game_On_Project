@@ -7,6 +7,7 @@ const timer = document.querySelector(`#time`);
 
 
 //Mole Holes
+    const moles = document.querySelectorAll(`.mole`)
     const moleHill = document.querySelector(`#moleHill`);
     const hole0 = document.querySelector(`#h1Hole`);
     const hole1 = document.querySelector(`#h2Hole`);
@@ -32,22 +33,26 @@ let lastPopUp = null;
 const game = {
     gameOver: false,
     currentHole: hole0,
-    currentMole: `Images/mole1Point.png`,
+    currentMole: `Images/moleHole.png`,
+    countDown: 5,
+    points: 0,
+    
+
     timeKeeper: ()=>{
-        let countDown = 5;
         function tick(){
-            countDown--;
-            timer.textContent = countDown
-            if(countDown>0){
+            game.countDown--;
+            timer.textContent = game.countDown
+            if(game.countDown>0){
                 setTimeout(tick, 1000)
             }else{
-                timer.textContent = `00`
+                timer.textContent = `Game Over!`
                 game.gameOver = true
             };
         };
         tick()
     },
     
+
     moleRandomizer: ()=>{
         let moleChance = Math.ceil(Math.random()*20).toFixed(0);
         if (moleChance >= 19) {
@@ -95,20 +100,34 @@ const game = {
     },
     
     peek: ()=>{
-        game.swapOut();
-        setInterval(()=>{
-            game.swapBack()
-        }, 3000);
+        if(game.gameOver !== false){
+            return
+        }else{
+            game.swapOut();
+            peekTime = setInterval(()=>{
+                game.swapBack()
+                console.log(`poof`)
+                game.peek()
+                clearInterval(peekTime)
+            }, 1000);
+        };
     },
 
-
+    hitTracker: ()=>{
+        game.swapBack();
+        console.log(`point`);
+    },
 
     start: ()=>{
         game.timeKeeper();
         game.scoreTracker();
+        game.peek();
     },
 };
-game.peek()
+
+console.log(game.currentMole)
+console.log(game.currentHole.src)
+
 
 // Buttons
 startButton.addEventListener(`click`, ()=>{
@@ -124,3 +143,5 @@ startButton.addEventListener(`click`, ()=>{
 restartButton.addEventListener(`click`, ()=>{
     location.reload()
 });
+
+let hitTracker = moles.forEach(mole => mole.addEventListener(`click`, game.hitTracker));
