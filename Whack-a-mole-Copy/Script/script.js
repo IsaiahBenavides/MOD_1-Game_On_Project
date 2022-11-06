@@ -4,20 +4,30 @@ const restartButton = document.querySelector(`#restartButton`);
 const gameContainer = document.querySelector(`#gameContainer`);
 const score = document.querySelector(`#score`);
 const timer = document.querySelector(`#time`);
+const hittable = document.querySelector(`.hittable`)
 
 
 //Mole Holes
     const moles = document.querySelectorAll(`.mole`)
     const moleHill = document.querySelector(`#moleHill`);
     const hole0 = document.querySelector(`#h1Hole`);
+    hole0.setAttribute(`draggable`, false)
     const hole1 = document.querySelector(`#h2Hole`);
+    hole1.setAttribute(`draggable`, false)
     const hole2 = document.querySelector(`#h3Hole`);
+    hole2.setAttribute(`draggable`, false)
     const hole3 = document.querySelector(`#h4Hole`);
+    hole3.setAttribute(`draggable`, false)
     const hole4 = document.querySelector(`#h5Hole`);
+    hole4.setAttribute(`draggable`, false)
     const hole5 = document.querySelector(`#h6Hole`);
+    hole5.setAttribute(`draggable`, false)
     const hole6 = document.querySelector(`#h7Hole`);
+    hole6.setAttribute(`draggable`, false)
     const hole7 = document.querySelector(`#h8Hole`);
+    hole7.setAttribute(`draggable`, false)
     const hole8 = document.querySelector(`#h9Hole`);
+    hole8.setAttribute(`draggable`, false)
     const moleHillArr = [
         hole0, hole1, hole2, 
         hole3, hole4, hole5, 
@@ -34,7 +44,7 @@ const game = {
     gameOver: false,
     currentHole: hole0,
     currentMole: `Images/moleHole.png`,
-    countDown: 5,
+    countDown: 30,
     points: 0,
     
 
@@ -92,10 +102,12 @@ const game = {
     swapOut: ()=>{
         game.holeRandomizer()
         game.moleRandomizer()
+        game.currentHole.classList.add(`hittable`)
         game.currentHole.src = game.currentMole
     },
 
     swapBack: ()=>{
+        game.currentHole.classList.remove(`hittable`)
         game.currentHole.src = `Images/moleHole.png`
     },
     
@@ -106,7 +118,7 @@ const game = {
             game.swapOut();
             peekTime = setInterval(()=>{
                 game.swapBack()
-                console.log(`poof`)
+                // console.log(`poof`)
                 game.peek()
                 clearInterval(peekTime)
             }, 1000);
@@ -114,8 +126,28 @@ const game = {
     },
 
     hitTracker: ()=>{
+        if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/mole5Point.png`){
+            console.log(`hit x5`);
+            game.points+=5
+            score.textContent = game.points
+        }else if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/mole1Point.png`){
+            console.log(`hit`);
+            game.points++
+            score.textContent = game.points
+        }else if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/bunny1Point.png`){
+            console.log(`hit -1`);
+            game.points--
+            score.textContent = game.points
+        }else if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/bunny3Point.png`){
+            console.log(`hit -3`);
+            game.points-=3
+            score.textContent = game.points
+        }
         game.swapBack();
-        console.log(`point`);
+    },
+
+    scoreTracker: ()=>{
+
     },
 
     start: ()=>{
@@ -124,9 +156,6 @@ const game = {
         game.peek();
     },
 };
-
-console.log(game.currentMole)
-console.log(game.currentHole.src)
 
 
 // Buttons
@@ -144,4 +173,4 @@ restartButton.addEventListener(`click`, ()=>{
     location.reload()
 });
 
-let hitTracker = moles.forEach(mole => mole.addEventListener(`click`, game.hitTracker));
+const hitTracker = moles.forEach(mole => mole.addEventListener(`click`, game.hitTracker));
