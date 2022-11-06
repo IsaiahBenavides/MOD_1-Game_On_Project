@@ -55,11 +55,13 @@ const game = {
             if(game.countDown>0){
                 setTimeout(tick, 1000)
             }else{
+                restartButton.classList.add(`button-87`);
+                restartButton.classList.remove(`hide`);
                 timer.textContent = `Game Over!`
                 game.gameOver = true
             };
         };
-        tick()
+        tick();
     },
     
 
@@ -67,92 +69,101 @@ const game = {
         let moleChance = Math.ceil(Math.random()*20).toFixed(0);
         if (moleChance >= 19) {
             game.currentMole = `Images/mole5Point.png`
+            // game.currentMole = `Images/mole1Point.png`
         } else if(moleChance <= 18 && moleChance >= 7){
             game.currentMole = `Images/mole1Point.png`
         } else if(moleChance <= 6 && moleChance >= 3){
             game.currentMole = `Images/bunny1Point.png`
+            // game.currentMole = `Images/mole1Point.png`
         } else {
             game.currentMole = `Images/bunny3Point.png`
-        }
+            // game.currentMole = `Images/mole1Point.png`
+        };
     },
 
     holeRandomizer: ()=>{
         let holeChance = Math.ceil(Math.random()*9).toFixed(0);
         if(holeChance <= 9 && holeChance > 8){
-            game.currentHole = hole8
+            game.currentHole = hole8;
         }else if(holeChance <= 8 && holeChance > 7){
-            game.currentHole = hole7
+            game.currentHole = hole7;
         }else if(holeChance <= 7 && holeChance > 6){
-            game.currentHole = hole6
+            game.currentHole = hole6;
         }else if(holeChance <= 6 && holeChance > 5){
-            game.currentHole = hole5
+            game.currentHole = hole5;
         }else if(holeChance <= 5 && holeChance > 4){
-            game.currentHole = hole4
+            game.currentHole = hole4;
         }else if(holeChance <= 4 && holeChance > 3){
-            game.currentHole = hole3
+            game.currentHole = hole3;
         }else if(holeChance <= 3 && holeChance > 2){
-            game.currentHole = hole2
+            game.currentHole = hole2;
         }else if(holeChance <= 2 && holeChance > 1){
-            game.currentHole = hole1
+            game.currentHole = hole1;
         }else{
-            game.currentHole = hole0
+            game.currentHole = hole0;
         };
     },
 
     swapOut: ()=>{
-        game.holeRandomizer()
-        game.moleRandomizer()
-        game.currentHole.classList.add(`hittable`)
-        game.currentHole.src = game.currentMole
+        game.holeRandomizer();
+        game.moleRandomizer();
+        game.currentHole.classList.add(`hittable`);
+        game.currentHole.src = game.currentMole;
     },
 
     swapBack: ()=>{
-        game.currentHole.classList.remove(`hittable`)
-        game.currentHole.src = `Images/moleHole.png`
+        game.currentHole.classList.remove(`hittable`);
+        game.currentHole.src = `Images/moleHole.png`;
     },
-    
+
     peek: ()=>{
+        const popUpTime =(minTime, maxTime)=>{
+            return Math.round(Math.random()*(maxTime - minTime)+minTime);
+        };
+        const randTime = popUpTime(430, 1200);
+
         if(game.gameOver !== false){
             return
         }else{
             game.swapOut();
             peekTime = setInterval(()=>{
-                game.swapBack()
+                game.swapBack();
                 // console.log(`poof`)
-                game.peek()
-                clearInterval(peekTime)
-            }, 1000);
+                game.peek();
+                clearInterval(peekTime);
+            }, randTime);
         };
     },
 
-    hitTracker: ()=>{
-        if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/mole5Point.png`){
-            console.log(`hit x5`);
-            game.points+=5
-            score.textContent = game.points
-        }else if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/mole1Point.png`){
-            console.log(`hit`);
-            game.points++
-            score.textContent = game.points
-        }else if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/bunny1Point.png`){
-            console.log(`hit -1`);
-            game.points--
-            score.textContent = game.points
-        }else if(game.currentHole.classList.contains(`hittable`) === true && game.currentMole === `Images/bunny3Point.png`){
-            console.log(`hit -3`);
-            game.points-=3
-            score.textContent = game.points
-        }
-        game.swapBack();
+    targetCheck: ()=>{
+        
     },
 
-    scoreTracker: ()=>{
-
+    hitTracker: (e)=>{
+        // console.log(`mole`, e.target.classList.contains(`hittable`))
+        if(e.target.classList.contains(`hittable`) === true && game.currentMole === `Images/mole1Point.png`){
+            console.log(`hit`);
+            game.points++;
+            score.textContent = game.points;
+        }
+        else if(e.target.classList.contains(`hittable`) === true && game.currentMole === `Images/mole5Point.png`){
+            console.log(`hit`);
+            game.points+=5;
+            score.textContent = game.points;
+        }else if(e.target.classList.contains(`hittable`) === true && game.currentMole === `Images/bunny1Point.png`){
+            console.log(`hit -1`);
+            game.points--;
+            score.textContent = game.points;
+        }else if(e.target.classList.contains(`hittable`) === true && game.currentMole === `Images/bunny3Point.png`){
+            console.log(`hit -3`);
+            game.points-=3;
+            score.textContent = game.points;
+        };
+        game.swapBack();
     },
 
     start: ()=>{
         game.timeKeeper();
-        game.scoreTracker();
         game.peek();
     },
 };
@@ -163,9 +174,6 @@ startButton.addEventListener(`click`, ()=>{
     startButton.classList.add(`hide`);
     startButton.classList.remove(`button-87`);
 
-    restartButton.classList.add(`button-87`);
-    restartButton.classList.remove(`hide`);
-
     game.start();
 });
 
@@ -173,4 +181,4 @@ restartButton.addEventListener(`click`, ()=>{
     location.reload()
 });
 
-const hitTracker = moles.forEach(mole => mole.addEventListener(`click`, game.hitTracker));
+const hitTracker = moles.forEach(mole => mole.addEventListener(`click`, (e)=> game.hitTracker(e) ));
